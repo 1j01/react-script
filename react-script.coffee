@@ -1,4 +1,6 @@
 
+React = @React ? require "react"
+
 E = (args...)->
 	
 	add = (from, {to})->
