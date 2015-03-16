@@ -8,7 +8,7 @@ for use with CoffeeScript
 With CoffeeScript:
 
 ```coffee
-# Alias it as whatever you want (maybe _ or $? )
+# Alias it as whatever you want (maybe _ or $?)
 E = ReactScript or require "react-script"
 
 class Message extends React.Component
@@ -55,7 +55,10 @@ Feel free.
 
 ## Other Projects
 
-Compare/contrast with
-* [hyperscript](https://github.com/mlmorg/react-hyperscript)
-* [hyper](https://github.com/xixixao/hyper)
-* [coffee-react](https://github.com/jsdf/coffee-react), CoffeeScript JSX
+* [hyperscript](https://github.com/dominictarr/hyperscript) (generates HTML)
+* [react-hyperscript](https://github.com/mlmorg/react-hyperscript) (hyperscript for React)
+* [virtual-hyperscript](https://github.com/Matt-Esch/virtual-dom/tree/master/virtual-hyperscript) (hyperscript for [virtual-dom](https://github.com/Matt-Esch/virtual-dom))
+* [hyper](https://github.com/xixixao/hyper) ("React.js wrapper for CoffeeScript", part library, part transformer)
+* [coffee-react](https://github.com/jsdf/coffee-react) (JSX for CoffeeScript (and [related projects](https://github.com/jsdf/coffee-react#related-projects)))
+* [react-no-jsx](https://www.npmjs.com/package/react-no-jsx) (uses arrays rather than function calls; not enough CoffeeScript)
+
