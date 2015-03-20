@@ -3,7 +3,7 @@
 
 An elegant DSL for React
 for use with CoffeeScript
-(and other languages)
+(and maybe other languages)
 
 With CoffeeScript:
 
@@ -53,12 +53,25 @@ Feel free.
 
 `npm i react-script --save`
 
-## Other Projects
+## Run tests
 
-* [hyperscript](https://github.com/dominictarr/hyperscript) (generates HTML)
-* [react-hyperscript](https://github.com/mlmorg/react-hyperscript) (hyperscript for React)
-* [virtual-hyperscript](https://github.com/Matt-Esch/virtual-dom/tree/master/virtual-hyperscript) (hyperscript for [virtual-dom](https://github.com/Matt-Esch/virtual-dom))
-* [hyper](https://github.com/xixixao/hyper) ("React.js wrapper for CoffeeScript", part library, part transformer)
-* [coffee-react](https://github.com/jsdf/coffee-react) (JSX for CoffeeScript (and [related projects](https://github.com/jsdf/coffee-react#related-projects)))
-* [react-no-jsx](https://www.npmjs.com/package/react-no-jsx) (uses arrays rather than function calls; not enough CoffeeScript)
+`npm test`
+
+## Similar Projects
+
+* [hyperscript](https://github.com/dominictarr/hyperscript)
+  (generates HTML)
+* [react-hyperscript](https://github.com/mlmorg/react-hyperscript)
+  (hyperscript for React)
+* [virtual-hyperscript](https://github.com/Matt-Esch/virtual-dom/tree/master/virtual-hyperscript)
+  (hyperscript for [virtual-dom](https://github.com/Matt-Esch/virtual-dom))
+* [zorium](https://github.com/Zorium/zorium)
+  (framework for virtual-dom)
+* [hyper](https://github.com/xixixao/hyper)
+  ("React.js wrapper for CoffeeScript", part library, part transformer)
+* [coffee-react](https://github.com/jsdf/coffee-react)
+  (JSX for CoffeeScript
+  (plus [related projects](https://github.com/jsdf/coffee-react#related-projects)))
+* [react-no-jsx](https://www.npmjs.com/package/react-no-jsx)
+  (uses arrays rather than function calls; not enough CoffeeScript)
 

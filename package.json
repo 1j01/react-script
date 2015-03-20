@@ -29,9 +29,13 @@
   },
   "main": "./lib/react-script.js",
   "devDependencies": {
-    "coffee-script": "~1.9.0"
+    "coffee-script": "~1.9.0",
+    "js-beautify": "^1.5.5",
+    "mocha": "^2.2.1",
+    "react": "^0.13.1"
   },
   "scripts": {
-    "prepublish": "coffee -c -o lib/ react-script.coffee"
+    "prepublish": "coffee -c -o lib/ react-script.coffee",
+    "test": "mocha --compilers coffee:coffee-script/register --require spec/helper spec/tests/*"
   }
 }
