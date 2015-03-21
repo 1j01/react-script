@@ -37,6 +37,8 @@ E = (args...)->
 				add av, to: classNames
 			else if ak is "data"
 				addAttr "data-#{hyphenate dk}", dv for dk, dv of av
+			else if ak.match /^data|aria/
+				addAttr (hyphenate ak), av
 			else
 				addAttr ak, av
 		
@@ -58,6 +60,8 @@ E = (args...)->
 		add childArgs, to: finalChildren
 		
 		React.createElement elementType, finalAttrs, finalChildren
+	
+	args[0] ?= ""
 	
 	switch typeof args[0]
 		when "function"
