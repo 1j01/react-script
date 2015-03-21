@@ -17,14 +17,24 @@ describe "ReactScript", ->
 				className: "foo bar"
 				class: ["baz", "qux"]
 	
-	it "could handle plural classes/classNames"
+	it "could support plural classes/classNames", ->
+		generate '<div class="food barf foo bar baz qux fubar"></div>',
+			from: $ ".fubar",
+				className: "food"
+				class: "barf"
+				classNames: ["foo", "bar"]
+				classes: ["baz", "qux"]
 	
 	context "should support conditional classes", ->
 		foo = yes
 		bar = no
-		it.skip "should ignore void values", ->
-			eg. $ "b", class: ("foobar" if condition)
-			eg. $ "b", class: ["foo" if foo, "bar" if bar]
-		it.skip "should support object syntax", ->
-			eg. $ "b", class: {foo: yes, bar: no}
-			eg. $ "b", class: {foo, bar}
+		it "should ignore void values", ->
+			generate '<b></b>',
+				from: $ "b", class: ("bar" if bar)
+			generate '<b class="foo"></b>',
+				from: $ "b", class: ["foo" if foo, "bar" if bar]
+		it "should support object syntax", ->
+			generate '<b class="bar"></b>',
+				from: $ "b", class: {foo: no, bar: yes}
+			generate '<b class="foo"></b>',
+				from: $ "b", class: {foo, bar}

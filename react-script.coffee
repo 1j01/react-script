@@ -33,7 +33,7 @@ E = (args...)->
 			finalAttrs[ak] = av unless av is false
 		
 		for ak, av of attrArgs
-			if ak in ["class", "className"]
+			if ak in ["class", "className", "classes", "classNames"]
 				add av, to: classNames
 			else if ak is "data"
 				addAttr "data-#{hyphenate dk}", dv for dk, dv of av
