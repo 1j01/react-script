@@ -23,6 +23,8 @@ describe "ReactScript", ->
 			</div>
 		', from:
 			$ ".test", $ ""
+			# what about with no arguments?
+			# could return a <div> or undefined
 	
 	it.skip "should fail loudly", ->
 		(->

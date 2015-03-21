@@ -3,9 +3,18 @@ React = @React ? require "react"
 
 E = (args...)->
 	
+	is_plainish_object = (o)->
+		typeof o is "object" and not (
+			o.length? or
+			React.isValidElement o
+		)
+	
 	add = (from, {to})->
 		if from instanceof Array
 			add thing, {to} for thing in from
+		else if is_plainish_object from
+			for k, v of from when v
+				to.push hyphenate k
 		else if from?
 			to.push from
 	
@@ -25,7 +34,7 @@ E = (args...)->
 		
 		for ak, av of attrArgs
 			if ak in ["class", "className"]
-				add (hyphenate av), to: classNames
+				add av, to: classNames
 			else if ak is "data"
 				addAttr "data-#{hyphenate dk}", dv for dk, dv of av
 			else
@@ -55,7 +64,7 @@ E = (args...)->
 			[elementClass, attrArgs, childArgs...] = args
 			createElement elementClass, {attrArgs, childArgs}
 		when "string"
-			if typeof args[1] is "object" and not args[1].length and not args[1]._isReactElement
+			if is_plainish_object args[1]
 				[selector, attrArgs, childArgs...] = args
 			else
 				[selector, childArgs...] = args
