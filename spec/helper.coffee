@@ -24,4 +24,4 @@ generate = (expected_html, {from: tree})->
 
 global.generate = generate
 global.React = React
-global.$ = ReactScript
+global.E = ReactScript

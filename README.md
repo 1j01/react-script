@@ -46,16 +46,31 @@ React.render message, document.body
 By simply supporting arrays and ignoring nully values,
 it works with all forms of conditionals and comprehensions.
 
-Feel free.
+All the functionality of [classnames](https://github.com/JedWatson/classnames)
+is built in. Just provide any
+class, classes, className, classNames or classList.
+All those properties are treated the same and can be
+a single class name,
+a single string with multiple class names,
+an object where the keys are the class names and the values are whether they should be present,
+or an array of any of the preceeding.
+Nully values are ignored, allowing for conditionals.
+
+The whole library tries to be pretty flexible.
+
+If you find something that doesn't work as you'd hope,
+feel free to [open an issue](https://github.com/1j01/react-script/issues).
 
 
 ## Install
 
 `npm i react-script --save`
 
+
 ## Run tests
 
 `npm test`
+
 
 ## Similar Projects
 
