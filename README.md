@@ -1,7 +1,7 @@
 
 # ReactScript
 
-An elegant DSL for React
+An elegant, flexible DSL for React
 for use with CoffeeScript
 (and maybe other languages)
 
