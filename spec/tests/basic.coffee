@@ -1,4 +1,11 @@
 
+error_please = (fn)->
+	try
+		do fn
+	catch
+		return
+	throw new Error "Function didn't throw an error"
+
 describe "ReactScript", ->
 	
 	it "should create elements from CSS selectors", ->
@@ -27,17 +34,22 @@ describe "ReactScript", ->
 			E ".test", E "", E()
 	
 	it "should fail loudly when it can't parse a selector", ->
-		try
+		error_please ->
 			E "um)#(E%"
-		catch
-			return
-		throw new Error "Why no error??"
 	
 	it "should handle boolean attributes", ->
 		data_falsey = no
 		data_truthy = yes
 		generate '<div data-truthy="true"></div>',
 			from: E "div", {data_falsey, data_truthy}
+	
+	it "should handle null as well as undefined", ->
+		data_falsey = null
+		data_truthy = "true-dat"
+		generate '<div data-truthy="true-dat"></div>',
+			from: E "div", {data_falsey, data_truthy}
+		generate '<div>true-dat</div>',
+			from: E "div", data_falsey, data_truthy
 	
 	it "should transform variations to data-*", ->
 		generate '<div data-foo="bar" data-baz="quux" data-norf="777"></div>',
@@ -48,12 +60,15 @@ describe "ReactScript", ->
 			render: -> E ".foo", @props.message
 		
 		generate '<div class="foo">Hello World!</div>',
-			from:
-				E Foo, message: "Hello World!"
+			from: E Foo, message: "Hello World!"
+	
+	it "should let you function", ->
+		e = E "input", onChange: -> "ok"
+		e.props.onChange()
 	
 	it.skip "ought to support selector attributes", ->
-			generate '<input type="number" min="5" max="10" autofocus>',
-				from: E "input[type=number][min=5][max=10][autofocus]"
+		generate '<input type="number" min="5" max="10" autofocus>',
+			from: E "input[type=number][min=5][max=10][autofocus]"
 	
 	it "could support using the child > selector"
 	it "would tell you to use > if you try to use the descendent selector"

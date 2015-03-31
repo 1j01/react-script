@@ -4,9 +4,9 @@ React = @React ? require "react"
 E = (args...)->
 	
 	is_plainish_object = (o)->
-		typeof o is "object" and not (
-			o.length? or
-			React.isValidElement o
+		o? and typeof o is "object" and not (
+			o.length? or # (e.g. [])
+			React.isValidElement o # (e.g. E())
 		)
 	
 	add = (from, {to})->
