@@ -1,11 +1,4 @@
 
-error_please = (fn)->
-	try
-		do fn
-	catch
-		return
-	throw new Error "Function didn't throw an error"
-
 describe "ReactScript", ->
 	
 	it "should create elements from CSS selectors", ->
@@ -34,7 +27,7 @@ describe "ReactScript", ->
 			E ".test", E "", E()
 	
 	it "should fail loudly when it can't parse a selector", ->
-		error_please ->
+		error_please /Unhandled/, ->
 			E "um)#(E%"
 	
 	it "should handle boolean attributes", ->
@@ -62,7 +55,7 @@ describe "ReactScript", ->
 		generate '<div class="foo">Hello World!</div>',
 			from: E Foo, message: "Hello World!"
 	
-	it.skip "should support components that wrap children (without props)", ->
+	it "should support components that wrap children (without props)", ->
 		class Window extends React.Component
 			render: -> E ".window", @props.children
 		class Header extends React.Component
@@ -93,8 +86,15 @@ describe "ReactScript", ->
 		generate '<input type="number" min="5" max="10" autofocus>',
 			from: E "input[type=number][min=5][max=10][autofocus]"
 	
-	it "could support using the child > selector"
-	it "would tell you to use > if you try to use the descendent selector"
+	it.skip "could support using the child > selector", ->
+		generate '<li><a href="http"></a></li>',
+			from: E "li > a", href: "http"
+		generate '<table><tbody><tr><td><div>Tables are annoying</div></td></tr></tbody></table>',
+			from: E "table > tbody > tr > td > div", "Tables are annoying"
+	
+	it.skip "would tell you to use > if you try to use the descendent selector", ->
+		error_please /descendent/, ->
+			E ".inexplicit .arbitrary .undefined"
 	
 	it "should not give react warnings in normal usage"
 	it "should give react warnings if you're missing a key"

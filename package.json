@@ -1,6 +1,6 @@
 {
   "name": "react-script",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Elegant DSL for React",
   "keywords": [
     "React",
@@ -36,6 +36,6 @@
   },
   "scripts": {
     "prepublish": "coffee -c -o lib/ react-script.coffee",
-    "test": "mocha --compilers coffee:coffee-script/register --require spec/helper spec/tests/*"
+    "test": "mocha --compilers coffee:coffee-script/register --require spec/helpers spec/tests/*"
   }
 }

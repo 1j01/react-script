@@ -65,14 +65,19 @@ E = (args...)->
 	
 	switch typeof args[0]
 		when "function"
-			[elementClass, attrArgs, childArgs...] = args
+			if is_plainish_object args[1]
+				[elementClass, attrArgs, childArgs...] = args
+			else
+				[elementClass, childArgs...] = args
+				attrArgs = null
+			
 			createElement elementClass, {attrArgs, childArgs}
 		when "string"
 			if is_plainish_object args[1]
 				[selector, attrArgs, childArgs...] = args
 			else
 				[selector, childArgs...] = args
-				attrArgs = {}
+				attrArgs = null
 			
 			tagName = "div"
 			selAttrs = selector.replace /^[a-z][a-z0-9\-_]*/i, (match)->
