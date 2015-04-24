@@ -62,6 +62,29 @@ describe "ReactScript", ->
 		generate '<div class="foo">Hello World!</div>',
 			from: E Foo, message: "Hello World!"
 	
+	it.skip "should support components that wrap children (without props)", ->
+		class Window extends React.Component
+			render: -> E ".window", @props.children
+		class Header extends React.Component
+			render: -> E ".header", @props.children
+		
+		generate '''
+			<div class="window">
+				<div class="header">
+					<h1>Hello World!</h1>
+				</div>
+				<div class="window-content">
+					<p>Hello World!</p>
+				</div>
+			</div>
+			''',
+			from:
+				E Window, # {},
+					E Header, # {},
+						E "h1", "Hello World!"
+					E ".window-content",
+						E "p", "Hello World!"
+	
 	it "should let you function", ->
 		e = E "input", onChange: -> "ok"
 		e.props.onChange()
@@ -72,3 +95,6 @@ describe "ReactScript", ->
 	
 	it "could support using the child > selector"
 	it "would tell you to use > if you try to use the descendent selector"
+	
+	it "should not give react warnings in normal usage"
+	it "should give react warnings if you're missing a key"
