@@ -15,4 +15,4 @@ $RECYCLE.BIN/
 # Common Linux backup files
 *~
 
-# This .npmignore is just to override the .gitignore
+# This .npmignore is mostly just to override the .gitignore
