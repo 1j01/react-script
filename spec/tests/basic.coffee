@@ -48,36 +48,6 @@ describe "ReactScript", ->
 		generate '<div data-foo="bar" data-baz="quux" data-norf="777"></div>',
 			from: E "div", data_foo: "bar", dataBaz: "quux", data: norf: 777
 	
-	it "should create elements from components", ->
-		class Foo extends React.Component
-			render: -> E ".foo", @props.message
-		
-		generate '<div class="foo">Hello World!</div>',
-			from: E Foo, message: "Hello World!"
-	
-	it "should support components that wrap children (without props)", ->
-		class Window extends React.Component
-			render: -> E ".window", @props.children
-		class Header extends React.Component
-			render: -> E ".header", @props.children
-		
-		generate '''
-			<div class="window">
-				<div class="header">
-					<h1>Hello World!</h1>
-				</div>
-				<div class="window-content">
-					<p>Hello World!</p>
-				</div>
-			</div>
-			''',
-			from:
-				E Window, # {},
-					E Header, # {},
-						E "h1", "Hello World!"
-					E ".window-content",
-						E "p", "Hello World!"
-	
 	it "should let you function", ->
 		e = E "input", onChange: -> "ok"
 		e.props.onChange()

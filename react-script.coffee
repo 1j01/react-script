@@ -39,41 +39,42 @@ E = (elementType, args...)->
 			selAttrs = selector.replace /^[a-z][a-z0-9\-_]*/i, (match)->
 				elementType = match
 				""
+			
+			finalAttrs = {}
+			classNames = []
+			
+			addAttr = (ak, av)->
+				# Why doesn't React handle boolean attributes?
+				finalAttrs[ak] = av unless av is false
+			
+			for ak, av of attrArgs
+				if ak in ["class", "className", "classes", "classNames", "classList"]
+					add av, to: classNames
+				else if ak is "data"
+					addAttr "data-#{hyphenate dk}", dv for dk, dv of av
+				else if ak.match /^data|aria/
+					addAttr (hyphenate ak), av
+				else
+					addAttr ak, av
+			
+			if selAttrs
+				unhandled = selAttrs
+					.replace /\.([a-z][a-z0-9\-_]*)/gi, (m, className)->
+						classNames.push className
+						""
+					.replace /#([a-z][a-z0-9\-_]*)/gi, (m, id)->
+						finalAttrs.id = id
+						""
+			
+			if unhandled
+				throw new Error "Unhandled selector fragment '#{unhandled}' in selector: '#{selector}'"
+			
+			finalAttrs.className = classNames.join " " if classNames.length
+			
 		when "function"
-			# okay
+			finalAttrs = attrArgs
 		else
 			throw new Error "Invalid first argument to ReactScript: #{elementType}"
-	
-	finalAttrs = {}
-	classNames = []
-	
-	addAttr = (ak, av)->
-		# Why doesn't React handle boolean attributes?
-		finalAttrs[ak] = av unless av is false
-	
-	for ak, av of attrArgs
-		if ak in ["class", "className", "classes", "classNames", "classList"]
-			add av, to: classNames
-		else if ak is "data"
-			addAttr "data-#{hyphenate dk}", dv for dk, dv of av
-		else if ak.match /^data|aria/
-			addAttr (hyphenate ak), av
-		else
-			addAttr ak, av
-	
-	if selAttrs
-		unhandled = selAttrs
-			.replace /\.([a-z][a-z0-9\-_]*)/gi, (m, className)->
-				classNames.push className
-				""
-			.replace /#([a-z][a-z0-9\-_]*)/gi, (m, id)->
-				finalAttrs.id = id
-				""
-	
-	if unhandled
-		throw new Error "Unhandled selector fragment '#{unhandled}' in selector: '#{selector}'"
-	
-	finalAttrs.className = classNames.join " " if classNames.length
 	
 	finalChildren = []
 	add childArgs, to: finalChildren
