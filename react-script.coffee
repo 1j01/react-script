@@ -25,35 +25,35 @@ hyphenate = (v)->
 		.replace /([a-z])([A-Z])/g, (m, az, AZ)->
 			"#{az}-#{AZ.toLowerCase()}"
 
-E = (elementType, args...)->
+E = (element_type, args...)->
 	
-	elementType ?= ""
+	element_type ?= ""
 	
 	if is_plainish_object args[0]
-		[attrArgs, childArgs...] = args
+		[attr_args, child_args...] = args
 	else
-		[childArgs...] = args
-		attrArgs = null
+		[child_args...] = args
+		attr_args = null
 	
-	switch typeof elementType
+	switch typeof element_type
 		when "string"
-			selector = elementType
-			elementType = "div"
-			selAttrs = selector.replace /^[a-z][a-z0-9\-_]*/i, (match)->
-				elementType = match
+			selector = element_type
+			element_type = "div"
+			partial_selector = selector.replace /^[a-z][a-z0-9\-_]*/i, (match)->
+				element_type = match
 				""
 			
-			finalAttrs = {}
-			classNames = []
+			final_attributes = {}
+			class_names = []
 			
 			addAttr = (attr_k, attr_v, aria)->
 				# Why doesn't React handle boolean attributes?
 				# @TODO: warn if attribute already added
-				finalAttrs[attr_k] = attr_v unless attr_v is false and not aria
+				final_attributes[attr_k] = attr_v unless attr_v is false and not aria
 			
-			for attr_k, attr_v of attrArgs
+			for attr_k, attr_v of attr_args
 				if attr_k in ["class", "className", "classes", "classNames", "classList"]
-					add attr_v, to: classNames
+					add attr_v, to: class_names
 				else if attr_k is "data"
 					for data_k, data_v of attr_v
 						addAttr "data-#{hyphenate data_k}", data_v
@@ -67,34 +67,34 @@ E = (elementType, args...)->
 				else
 					addAttr attr_k, attr_v
 			
-			if selAttrs
-				unhandled = selAttrs
+			if partial_selector
+				unhandled = partial_selector
 					.replace /\.([a-z][a-z0-9\-_]*)/gi, (m, className)->
-						classNames.push className
+						class_names.push className
 						""
 					.replace /#([a-z][a-z0-9\-_]*)/gi, (m, id)->
-						finalAttrs.id = id
+						final_attributes.id = id
 						""
 			
 			if unhandled
 				throw new Error "Unhandled selector fragment '#{unhandled}' in selector: '#{selector}'"
 			
-			finalAttrs.className = classNames.join " " if classNames.length
+			final_attributes.className = class_names.join " " if class_names.length
 			
 		when "function"
-			finalAttrs = attrArgs
+			final_attributes = attr_args
 		else
-			throw new Error "Invalid first argument to ReactScript: #{elementType}"
+			throw new Error "Invalid first argument to ReactScript: #{element_type}"
 	
-	finalChildArgs = []
-	wasDynamic = no
-	for childArg in childArgs
-		wasDynamic or= add childArg, to: finalChildArgs
+	final_child_args = []
+	was_dynamic = no
+	for child_arg in child_args
+		was_dynamic or= add child_arg, to: final_child_args
 	
-	if wasDynamic
-		React.createElement elementType, finalAttrs, finalChildArgs
+	if was_dynamic
+		React.createElement element_type, final_attributes, final_child_args
 	else
-		React.createElement elementType, finalAttrs, finalChildArgs...
+		React.createElement element_type, final_attributes, final_child_args...
 
 
 if module?.exports?
