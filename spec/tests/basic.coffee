@@ -36,6 +36,12 @@ describe "ReactScript", ->
 		generate '<div data-truthy="true"></div>',
 			from: E "div", {data_falsey, data_truthy}
 	
+	it "should handle aria boolean attributes", ->
+		aria_falsey = no
+		aria_truthy = yes
+		generate '<div aria-falsey="false" aria-truthy="true"></div>',
+			from: E "div", {aria_falsey, aria_truthy}
+	
 	it "should handle null as well as undefined", ->
 		data_falsey = null
 		data_truthy = "true-dat"
@@ -45,8 +51,12 @@ describe "ReactScript", ->
 			from: E "div", data_falsey, data_truthy
 	
 	it "should transform variations to data-*", ->
-		generate '<div data-foo="bar" data-baz="quux" data-norf="777"></div>',
-			from: E "div", data_foo: "bar", dataBaz: "quux", data: norf: 777
+		generate '<div data-xyzzy="Nothing happens." data-foo="bar" data-baz="quux" data-norf="777"></div>',
+			from: E "div", "data-xyzzy": "Nothing happens.", data_foo: "bar", dataBaz: "quux", data: norf: 777
+	
+	it "should transform variations to aria-*", ->
+		generate '<div aria-xyzzy="Nothing happens." aria-foo="bar" aria-baz="quux" aria-norf="777"></div>',
+			from: E "div", "aria-xyzzy": "Nothing happens.", aria_foo: "bar", ariaBaz: "quux", aria: norf: 777
 	
 	it "should let you function", ->
 		e = E "input", onChange: -> "ok"

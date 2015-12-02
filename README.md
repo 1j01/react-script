@@ -15,6 +15,7 @@ class Message extends React.Component
 	render: ->
 		E ".message", class: (if @props.author is you then "from-you"),
 			E ".info",
+				style: float: "right"
 				"From "
 				E "span.author", @props.author
 				" at "
@@ -57,6 +58,12 @@ or an array of any of the preceeding.
 Nully values are ignored, allowing for conditionals.
 
 The whole library tries to be pretty flexible.
+
+You can specify `data-*` and `aria-*` properties
+either as e.g. `"data-size"`/`"area-role"`
+or `dataSize`/`ariaRole`
+or `data_size`/`area_role` 
+or `data: size: 1.337`/`aria: role: "button"`.
 
 If you find something that doesn't work as you'd hope,
 feel free to [open an issue](https://github.com/1j01/react-script/issues).

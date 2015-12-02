@@ -43,19 +43,26 @@ E = (elementType, args...)->
 			finalAttrs = {}
 			classNames = []
 			
-			addAttr = (ak, av)->
+			addAttr = (attr_k, attr_v, aria)->
 				# Why doesn't React handle boolean attributes?
-				finalAttrs[ak] = av unless av is false
+				# @TODO: warn if attribute already added
+				finalAttrs[attr_k] = attr_v unless attr_v is false and not aria
 			
-			for ak, av of attrArgs
-				if ak in ["class", "className", "classes", "classNames", "classList"]
-					add av, to: classNames
-				else if ak is "data"
-					addAttr "data-#{hyphenate dk}", dv for dk, dv of av
-				else if ak.match /^data|aria/
-					addAttr (hyphenate ak), av
+			for attr_k, attr_v of attrArgs
+				if attr_k in ["class", "className", "classes", "classNames", "classList"]
+					add attr_v, to: classNames
+				else if attr_k is "data"
+					for data_k, data_v of attr_v
+						addAttr "data-#{hyphenate data_k}", data_v
+				else if attr_k is "aria"
+					for aria_k, aria_v of attr_v
+						addAttr "aria-#{hyphenate aria_k}", aria_v, yes
+				else if attr_k.match /^data/
+					addAttr (hyphenate attr_k), attr_v
+				else if attr_k.match /^aria/
+					addAttr (hyphenate attr_k), attr_v, yes
 				else
-					addAttr ak, av
+					addAttr attr_k, attr_v
 			
 			if selAttrs
 				unhandled = selAttrs
