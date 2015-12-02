@@ -3,7 +3,7 @@ React = @React ? require "react"
 
 is_plainish_object = (o)->
 	o? and typeof o is "object" and not (
-		o.length? or # (e.g. [])
+		o instanceof Array or # (e.g. [])
 		React.isValidElement o # (e.g. E())
 	)
 

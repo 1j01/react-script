@@ -47,3 +47,13 @@ describe "ReactScript", ->
 				data: type: "kung"
 				class: foo: "bar"
 				"Hello World!"
+
+	it "should work with the prop 'length' and not think it's an array", ->
+		class Ruler extends React.Component
+			render: ->
+				if @props.length isnt 12
+					throw new Error "@props.length should be 12; @props = #{JSON.stringify @props}"
+				E ".ruler", data: length: @props.length
+		
+		generate '<div data-length="12" class="ruler"></div>',
+			from: E Ruler, length: 12
