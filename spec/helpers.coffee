@@ -40,6 +40,12 @@ error_please = (rgx, fn)->
 			throw new Error "Function threw #{typeof e} (#{show e})"
 	throw new Error "Function didn't throw an error"
 
+
+console_warn = console.warn
+console.warn = ->
+	console_warn.apply console, arguments
+	throw new Error "console.warn: #{[].slice.apply(arguments).join(" ")}"
+
 global.error_please = error_please
 global.generate = generate
 global.React = React

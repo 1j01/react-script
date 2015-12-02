@@ -10,11 +10,14 @@ is_plainish_object = (o)->
 add = (from, {to})->
 	if from instanceof Array
 		add thing, {to} for thing in from
+		return yes
 	else if is_plainish_object from
 		for k, v of from when v
 			to.push hyphenate k
+		return yes
 	else if from?
 		to.push from
+	return no
 
 hyphenate = (v)->
 	"#{v}"
@@ -83,10 +86,15 @@ E = (elementType, args...)->
 		else
 			throw new Error "Invalid first argument to ReactScript: #{elementType}"
 	
-	finalChildren = []
-	add childArgs, to: finalChildren
+	finalChildArgs = []
+	wasDynamic = no
+	for childArg in childArgs
+		wasDynamic or= add childArg, to: finalChildArgs
 	
-	React.createElement elementType, finalAttrs, finalChildren
+	if wasDynamic
+		React.createElement elementType, finalAttrs, finalChildArgs
+	else
+		React.createElement elementType, finalAttrs, finalChildArgs...
 
 
 if module?.exports?

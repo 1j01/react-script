@@ -62,7 +62,7 @@ describe "ReactScript", ->
 		e = E "input", onChange: -> "ok"
 		e.props.onChange()
 	
-	it.skip "ought to support selector attributes", ->
+	it.skip "could support selector attributes", ->
 		generate '<input type="number" min="5" max="10" autofocus>',
 			from: E "input[type=number][min=5][max=10][autofocus]"
 	
@@ -76,5 +76,18 @@ describe "ReactScript", ->
 		error_please /descendent/, ->
 			E ".inexplicit .arbitrary .undefined"
 	
-	it "should not give react warnings in normal usage"
-	it "should give react warnings if you're missing a key"
+	it "should not give react warnings in normal usage", ->
+		E ".foobar",
+			E "ol.static",
+				E "li", "Item A: an item"
+				E "li", "Item B: another item"
+				E "li", "Item C: also an item"
+			E "ul.dynamic",
+				for n in [1...3]
+					E "li", key: n, "Item #{n}"
+	
+	it "should give react warnings if you're missing a key", ->
+		error_please /Warning: Each child in an array or iterator should have a unique "key" prop/, ->
+			E "ul",
+				for n in [1...3]
+					E "li", "Item #{n}"
