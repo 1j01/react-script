@@ -26,6 +26,23 @@ describe "ReactScript", ->
 		', from:
 			E ".test", E "", E()
 	
+	it "should allow arrays of arbitrary depth", ->
+		generate '
+			<div class="test">
+				<div class="a"></div>
+				<div class="b"></div>
+				<div class="c"></div>
+				<div class="d"></div>
+				<div class="e"></div>
+			</div>
+		', from:
+			E ".test",
+				E ".a", key: "a"
+				[E ".b", key: "b"]
+				E ".c", key: "c"
+				[[E ".d", key: "d"]]
+				E ".e", key: "e"
+	
 	it "should fail loudly when it can't parse a selector", ->
 		error_please /Unhandled/, ->
 			E "um)#(E%"
