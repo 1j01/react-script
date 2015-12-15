@@ -60,10 +60,13 @@ Nully values are ignored, allowing for conditionals.
 The whole library tries to be pretty flexible.
 
 You can specify `data-*` and `aria-*` properties
-either as e.g. `"data-size"`/`"area-role"`
-or `dataSize`/`ariaRole`
-or `data_size`/`area_role` 
-or `data: size: 1.337`/`aria: role: "button"`.
+either as e.g. `"data-size"`/`"aria-pressed"`
+or `dataSize`/`ariaPressed`
+or `data_size`/`aria_pressed` 
+or `data: size: 1.337`/`aria: pressed: true`.
+(ARIA's `role` attribute is just `role`.)
+
+Check out the [specs](https://github.com/1j01/react-script/tree/master/spec/tests) for more details.
 
 If you find something that doesn't work as you'd hope,
 feel free to [open an issue](https://github.com/1j01/react-script/issues).

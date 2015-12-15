@@ -35,17 +35,21 @@ describe "ReactScript", ->
 		class Foo extends React.Component
 			render: ->
 				# it should not turn {data: {foo: bar}} into {"data-foo": bar}
-				unless @props.data?
+				unless @props.data?.type is "kung"
 					throw new Error "@props.data should be {type: 'kung'}; @props = #{JSON.stringify @props}"
-				# it should not turn {class: {foo: bar} into {className: "#{bar}"}
-				unless @props.data?
+				# it should not turn {class: {foo: bar}} into {className: "#{bar}"}
+				unless @props.class?.foo is "bar"
 					throw new Error "@props.class should be {foo: 'bar'}; @props = #{JSON.stringify @props}"
+				# it should not turn {ariaLabel: bar} into {"aria-label": bar}
+				unless @props.ariaLabel is "Hello World! This is a test!"
+					throw new Error "@props.ariaLabel should be 'Hello World! This is a test!'; @props = #{JSON.stringify @props}"
 				E ".foo", class: "#{@props.data.type}-fu", @props.children
 		
 		generate '<div class="kung-fu foo">Hello World!</div>',
 			from: E Foo,
 				data: type: "kung"
 				class: foo: "bar"
+				ariaLabel: "Hello World! This is a test!"
 				"Hello World!"
 
 	it "should work with the prop 'length' and not think it's an array", ->
