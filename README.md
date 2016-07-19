@@ -40,7 +40,7 @@ message = E Message,
 		{fileName:  "virus.exe", downloadLink: "#"}
 	]
 
-React.render message, document.body
+ReactDOM.render message, document.body
 
 ```
 
@@ -54,7 +54,7 @@ All those properties are treated the same and can be
 a single class name,
 a single string with multiple class names,
 an object where the keys are the class names and the values are whether they should be present,
-or an array of any of the preceeding.
+or an array of any of the preceding.
 Nully values are ignored, allowing for conditionals.
 
 The whole library tries to be pretty flexible.
@@ -72,10 +72,26 @@ If you find something that doesn't work as you'd hope,
 feel free to [open an issue](https://github.com/1j01/react-script/issues).
 
 
-## Install
+## Installation
 
 `npm i react-script --save`
 
+## Usage
+
+You can use ReactScript through a bundler like [browserify][] or [webpack][], or you can include it as a script:
+
+```html
+<script src="node_modules/react-script/lib/react-script.js"></script>`
+```
+
+Then alias `ReactScript` as something short such as `E` to use as a DSL.
+
+```js
+var E = ReactScript; // or require("react-script");
+```
+
+[webpack]: https://webpack.github.io/
+[browserify]: http://browserify.org/
 
 ## Run tests
 
